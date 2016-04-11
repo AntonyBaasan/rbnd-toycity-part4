@@ -68,11 +68,12 @@ class Udacidata
     # Option A:
     # found this solution from here: http://stackoverflow.com/questions/26707169/how-to-remove-a-row-from-a-csv-with-ruby
     # how good is this(table) solution?
-    # if chose this way, how I would return "deleted product"
     table = CSV.table(@@data_path)
+    
     deleted_row = table.select do |row|
         row[:id].to_i == id
     end
+    # how to remove this duplication
     table.delete_if do |row|
         row[:id].to_i == id
     end
