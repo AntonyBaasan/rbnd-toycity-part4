@@ -1,0 +1,3 @@
+1) How to add only one commit in the Master branch history?
+In my case, when I merge Master into a Feature, the Master 
+takes all commit history, I want to add only one commit in the Master.

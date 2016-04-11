@@ -18,48 +18,50 @@ class TestUdacidata < MiniTest::Test
       Product.create(brand: "WalterToys", name: "Sticky Notes", price: 34.00)
     end
     after = CSV.read(@data_path).length
+    # puts "after: "+after.to_s
+    # puts "before: "+before.to_s
     assert(after == before + 5)
   end
 
-  # def test_create_method_returns_product_object
-  #    product = Product.create(brand: "ColtToys", name: "Orchid Plant", price: 2.00)
-  #    assert_instance_of(Product, product)
-  # end
-  #
-  # def test_all_method_returns_array_data_type
-  #   array_of_products = Product.all
-  #   assert_kind_of(Array, array_of_products)
-  # end
-  #
-  # def test_all_method_returns_array_of_products
-  #   array_of_products = Product.all
-  #   array_of_products.each do |product|
-  #     assert_instance_of(Product, product)
-  #   end
-  # end
-  #
-  # def test_all_method_returns_all_products_in_database
-  #   expected = CSV.read(@data_path).drop(1).length
-  #   actual = Product.all.length
-  #   assert_equal(expected, actual)
-  # end
-  #
-  # def test_first_method_returns_product_object
-  #   product = Product.first
-  #   assert_instance_of(Product, product)
-  # end
-  #
-  # def test_first_method_returns_correct_product
-  #   product = Product.first
-  #   data = CSV.read(@data_path).drop(1)
-  #   assert_equal(data.first[0].to_i, product.id)
-  # end
-  #
-  # def test_first_n_returns_array
-  #   array_of_products = Product.first(3)
-  #   assert_kind_of(Array, array_of_products)
-  # end
-  #
+  def test_create_method_returns_product_object
+     product = Product.create(brand: "ColtToys", name: "Orchid Plant", price: 2.00)
+     assert_instance_of(Product, product)
+  end
+  
+  def test_all_method_returns_array_data_type
+    array_of_products = Product.all
+    assert_kind_of(Array, array_of_products)
+  end
+  
+  def test_all_method_returns_array_of_products
+    array_of_products = Product.all
+    array_of_products.each do |product|
+      assert_instance_of(Product, product)
+    end
+  end
+  
+  def test_all_method_returns_all_products_in_database
+    expected = CSV.read(@data_path).drop(1).length
+    actual = Product.all.length
+    assert_equal(expected, actual)
+  end
+  
+  def test_first_method_returns_product_object
+    product = Product.first
+    assert_instance_of(Product, product)
+  end
+  
+#   def test_first_method_returns_correct_product
+#     product = Product.first
+#     data = CSV.read(@data_path).drop(1)
+#     assert_equal(data.first[0].to_i, product.id)
+#   end
+  
+  def test_first_n_returns_array
+    array_of_products = Product.first(3)
+    assert_kind_of(Array, array_of_products)
+  end
+  
   # def test_first_n_returns_correct_products
   #   array_of_products = Product.first(3)
   #   data = CSV.read(@data_path).drop(1)
@@ -143,7 +145,7 @@ class TestUdacidata < MiniTest::Test
   # end
   #
   # def test_update_info_of_existing_product
-  #   product = Product.find(4).update(price: 100000.00, brand: "Lolerskater")
+  #   product = Product.find(4.update(price: 100000.00, brand: "Lolerskater")
   #   actual = [product.price.to_f, product.brand]
   #   expected = [100000.00, "Lolerskater"]
   #   assert_equal(expected, actual)

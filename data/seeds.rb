@@ -4,5 +4,7 @@ require 'faker'
 # fake data for testing purposes
 
 def db_seed
-  # Your code goes here!
+    5.times do
+        Product.create(brand: "WalterToys", name: "Sticky Notes", price: 34.00)
+    end
 end
