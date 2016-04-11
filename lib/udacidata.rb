@@ -93,12 +93,11 @@ class Udacidata
   # What are the better solutions?   
   def update (opts={})
     opts.each do |name, value|
-        puts "name: "+name.to_s+", value: "+value.to_s
-        # self.instance_variable_set(name, value)
-        self.send(name.to_s+"=", value)
+        # puts "name: "+name.to_s+", value: "+value.to_s
+        self.instance_variable_set("@#{name.to_s}", value)
     end
     
-    update_db self
+    self.update_db self
   end
   
   # get attribute array from instance
@@ -106,7 +105,6 @@ class Udacidata
     instance_variables.map{|ivar| instance_variable_get ivar}
   end
 
-  private
   # Inserts new instance of a data into database file
   def self.insert_into_db data
 
@@ -125,26 +123,28 @@ class Udacidata
     return data
   end
   
-  # Inserts new instance of a data into database file
-  def self.update_db data
+  # Updates data inside database file
+  def update_db data
 
-    rows = CSV.read(@@data_path).drop(1)
-    
-    rows.each do |row|
-        if(row[0].to_s == data.id.to_s)
-            row
-        end
-    end
-
-
+    header = CSV.read(@@data_path)[0]
     table = CSV.table(@@data_path)
     
-    updated_row = table.each do |row|
-        if(row[:id].to_i == data.id)
-            row  << data.attrs
+    table.each do |row|
+        if(row[:id].to_i == id)
+            # data.attrs.each{|attr| }
+            header.each do |field|
+                row[field.to_s] = data.instance_variable_get("@#{field.to_s}")
+            end
+            
         end
     end
+
     
+    File.open(@@data_path, 'w') do |f|
+        f.write(table.to_csv)
+    end
+
+
     data
   end
   
