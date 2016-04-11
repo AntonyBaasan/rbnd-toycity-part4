@@ -18,6 +18,15 @@ class Module
   end
   
   def find_by_field field = {}
+    res = where field 
+    # puts "--- "+res.length.to_s
+    # Better way?
+    return (res.length == 1) ? res.first : res
+    
+    res = where field 
+  end
+
+  def where field = {}
     table = CSV.table(@@data_path)
     
     # puts "field: "+field.to_s
@@ -40,7 +49,6 @@ class Module
     
     # puts "--- "+res.length.to_s
     # Better way?
-    return (res.length == 1) ? res.first : res
+    return res
   end
-
 end

@@ -90,6 +90,17 @@ class Udacidata
     
   end
   
+  # What are the better solutions?   
+  def update (opts={})
+    opts.each do |name, value|
+        puts "name: "+name.to_s+", value: "+value.to_s
+        # self.instance_variable_set(name, value)
+        self.send(name.to_s+"=", value)
+    end
+    
+    update_db self
+  end
+  
   # get attribute array from instance
   def attrs
     instance_variables.map{|ivar| instance_variable_get ivar}
@@ -114,5 +125,27 @@ class Udacidata
     return data
   end
   
+  # Inserts new instance of a data into database file
+  def self.update_db data
+
+    rows = CSV.read(@@data_path).drop(1)
+    
+    rows.each do |row|
+        if(row[0].to_s == data.id.to_s)
+            row
+        end
+    end
+
+
+    table = CSV.table(@@data_path)
+    
+    updated_row = table.each do |row|
+        if(row[:id].to_i == data.id)
+            row  << data.attrs
+        end
+    end
+    
+    data
+  end
   
 end
