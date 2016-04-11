@@ -102,7 +102,7 @@ class Udacidata
     # if file doesn't exits create
     if !File.exist?(@@data_path)
         CSV.open(data_path, "wb") do |csv|
-            csv << ["id", "brand", "product", "price"]
+            csv << ["id", "brand", "name", "price"]
         end
     end
     
