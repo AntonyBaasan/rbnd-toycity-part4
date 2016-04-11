@@ -16,34 +16,84 @@ class Udacidata
     # get header row as array of fields
     header = CSV.read(@@data_path)[0]
     # get all rows except header
-    CSV.read(@@data_path).drop(1).map{|row| self.new(Hash[header.zip row])}
+    CSV.read(@@data_path).drop(1).map{|row| self.new(Hash[header.map(&:to_sym).zip row])}
   end
 
   # QUESTION: What is better(or best) way?   
-  def self.first *args
+  def self.first amount=1
     # get header row as array of fields
     header = CSV.read(@@data_path)[0]
     rows = CSV.read(@@data_path).drop(1)
     
-    if(args.length == 0 )
-        rows.first(1).map{|row| self.new(Hash[header.zip row])}.first
-    else
-        rows.first(args[0]).map{|row| self.new(Hash[header.zip row])}
+    # create data with params of zipped header and a row
+    res = rows.first(amount).map do |row|
+        self.new(Hash[header.map(&:to_sym).zip row])
     end
+        
+    (amount == 1 ) ? res.first : res
   end
   
-  # get attribute array from instance 
-  def attrs
-    instance_variables.map{|ivar| instance_variable_get ivar}
+  # QUESTION: What is better(or best) way?   
+  def self.last amount=1
+    # get header row as array of fields
+    header = CSV.read(@@data_path)[0]
+    rows = CSV.read(@@data_path).drop(1)
+    
+    res = rows.last(amount).map do |row|
+        self.new(Hash[header.map(&:to_sym).zip row])
+    end
+        
+    (amount == 1 ) ? res.first : res
   end
   
   def self.find id
-    @@all.each do |data|
-        return data if(id == data.id)
+    # Option A - Not much effeciant because it creates all the objects before find by id
+    # all.each do |object|
+    #     if(object.id == id)
+    #         return object
+    #     end 
+    # end
+    
+    # Option B - Again duplication! Better solution? 
+    header = CSV.read(@@data_path)[0]
+    rows = CSV.read(@@data_path).drop(1)
+    
+    res = rows.map do |row|
+        object = self.new(Hash[header.map(&:to_sym).zip row])
+        return object if(object.id == id)
     end
-    return nil
   end
   
+  def self.destroy id
+    # Option A:
+    # found this solution from here: http://stackoverflow.com/questions/26707169/how-to-remove-a-row-from-a-csv-with-ruby
+    # how good is this(table) solution?
+    # if chose this way, how I would return "deleted product"
+    table = CSV.table(@@data_path)
+    deleted_row = table.select do |row|
+        row[:id].to_i == id
+    end
+    table.delete_if do |row|
+        row[:id].to_i == id
+    end
+    
+    File.open(@@data_path, 'w') do |f|
+        f.write(table.to_csv)
+    end
+    
+    # puts "deleted_row: " + deleted_row.to_s
+    # puts "deleted_row.to_hash: " + deleted_row.first.to_hash.to_s
+    
+    deleted_object = self.new(deleted_row.first.to_hash)
+    return deleted_object
+    
+  end
+  
+  # get attribute array from instance
+  def attrs
+    instance_variables.map{|ivar| instance_variable_get ivar}
+  end
+
   private
   # Inserts new instance of a data into database file
   def self.insert_into_db data
@@ -62,5 +112,6 @@ class Udacidata
     
     return data
   end
+  
   
 end
