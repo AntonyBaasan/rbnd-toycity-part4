@@ -1,10 +1,12 @@
-1) How to add only one commit in the Master branch history?
-In my case, when I merge Master into a Feature, the Master 
-takes all commit history, I want to add only one commit in the Master.
 
-2) I see very bad code duplication with methods "first" and "last" ?
+1) I see very bad code duplication with methods "first" and "last"(in Udacidata.rb) ?
 How to make it DRY?
 
-3) I have "attrs" method which returns list of available attributes.
-What is a better way to do it?
+2) I have "attrs" method (in Udacidata.rb) which returns list of available attributes.
+What is a better way (or other options) to do it?
 
+3) Please give better(or standandartized) solutions to work with CVS?
+
+4) I have lot of duplications, can you give ideas to refactor the code?
+
+5) 
