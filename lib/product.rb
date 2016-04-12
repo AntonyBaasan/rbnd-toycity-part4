@@ -17,6 +17,7 @@ class Product < Udacidata
     @name = opts[:name]
     @price = opts[:price]
   end
+  
 
   private
 
