@@ -1,0 +1,26 @@
+* [33m57e285e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfix-by-review[m[33m)[m inject fix, move 'where' method to udacidata
+* [33m3c3aa83[m first and last method done with class_eval
+*   [33m9166821[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m Merge branch 'analyzable-feature'
+[32m|[m[33m\[m  
+[32m|[m * [33mc2e0503[m[33m ([m[1;31morigin/analyzable-feature[m[33m, [m[1;32manalyzable-feature[m[33m)[m app.rb runs as expected
+[32m|[m * [33mc5fa6aa[m add all except report
+[32m|[m * [33m32948bd[m update question file
+[32m|[m[32m/[m  
+*   [33m6b1fe45[m[33m ([m[1;31morigin/findby-feature[m[33m)[m Merge branch 'findby-feature'
+[34m|[m[35m\[m  
+[34m|[m * [33ma51975f[m implement find_by.rb
+[34m|[m * [33m2a31105[m update method in progress
+[34m|[m * [33m273e998[m add find_by_field method
+[34m|[m[34m/[m  
+* [33me4949bc[m[33m ([m[1;31morigin/udacidata-feature[m[33m)[m udacidata.rb done
+* [33m98b7d80[m product implementation in progress
+* [33m3f8950b[m udacidata class in progress
+* [33ma503744[m add git ignore file
+* [33mfb09be8[m New Rubric linked
+* [33m10342e9[m Switch assert_equal before and after
+* [33m47cb329[m Add test for all method checking persistence of data
+* [33m635a497[m Remove superfluous code
+* [33mdabb344[m Add test to check if Update method updates the database
+* [33m97f2520[m Fix headings to match code
+* [33mb0b353d[m Change order of app.rb output
+* [33mda79880[m Initial commit
