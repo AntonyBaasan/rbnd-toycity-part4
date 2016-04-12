@@ -8,29 +8,32 @@ module Analyzable
     #     sum + product.price
     # end
   
-    total = 0
+    total = 0.0
     product_list.each do |product|
-        total += product.price
+        total += product.price.to_f
     end
     
     (total / product_list.count).round(2)
   end
   
   def print_report product_list
-    report = capture_io do 
-        puts "Inventory by brand:"
-        (count_by_brand Product.all).each do |brand, amount|
-            puts "  - #{brand}: #{amount}"
-        end
-        puts "Inventory by name:"
-        (count_by_name Product.all).each do |name, amount|
-            puts "  - #{name}: #{amount}"
-        end
+    report = "Inventory by brand:"
+    report += "\n"
+    (count_by_brand Product.all).each do |brand, amount|
+        report += "  - #{brand}: #{amount}"
+        report += "\n"
     end
+    report += "Inventory by name:"
+    report += "\n"
+    (count_by_name Product.all).each do |name, amount|
+        report += "  - #{name}: #{amount}"
+        report += "\n"
+    end
+    puts report
     report
   end
   
-  # how to write something like this?
+  # better solution?
   @@fields.each { |field|
         class_eval %Q"
         
@@ -50,31 +53,4 @@ module Analyzable
           "
       }
       
-#   def count_by_brand product_list
-#     result = {}
-    
-#     product_list.each do |product|
-#         if(result.has_key? product.brand)
-#             result[product.brand] += 1
-#         else
-#             result.merge!(product.brand => 1)
-#         end
-#     end
-    
-#     result
-#   end
-  
-#   def count_by_name product_list
-#     result = {}
-    
-#     product_list.each do |product|
-#         if(result.has_key? product.name.to_s)
-#             result[product.name] += 1
-#         else
-#             result.merge!(product.name.to_s => 1)
-#         end
-#     end
-    
-#     result
-#   end
 end

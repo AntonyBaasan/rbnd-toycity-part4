@@ -62,6 +62,9 @@ class Udacidata
         object = self.new(Hash[header.map(&:to_sym).zip row])
         return object if(object.id == id)
     end
+    
+    raise ToyStoreDBErrors::NoItemFoundError, "No Item with ID: #{id}"
+    
   end
   
   def self.destroy id
@@ -73,6 +76,11 @@ class Udacidata
     deleted_row = table.select do |row|
         row[:id].to_i == id
     end
+    
+    if(deleted_row == nil || deleted_row.count == 0)
+        raise ToyStoreDBErrors::NoItemFoundError, "No Item with ID: #{id}"
+    end
+    
     # how to remove this duplication
     table.delete_if do |row|
         row[:id].to_i == id
@@ -101,6 +109,16 @@ class Udacidata
   def attrs
     instance_variables.map{|ivar| instance_variable_get ivar}
   end
+  
+  def to_s
+    string = "#{self.class.name}("
+    instance_variables.each do |attr|
+        value = instance_variable_get attr
+        string += "#{attr} - #{value}, "
+    end
+    string + ")\n"
+  end
+
 
   # Inserts new instance of a data into database file
   def self.insert_into_db data

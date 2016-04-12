@@ -1,1 +1,5 @@
-# Your custom error classes will be placed here
+module ToyStoreDBErrors
+  # Error classes go here
+  class NoItemFoundError < StandardError
+  end
+end
