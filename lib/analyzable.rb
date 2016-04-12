@@ -3,16 +3,7 @@ module Analyzable
   @@fields = ["brand", "name"]
   
   public def average_price product_list
-    # why this one is not working? 
-    # total = product_list.inject do |sum, product|
-    #     sum + product.price
-    # end
-  
-    total = 0.0
-    product_list.each do |product|
-        total += product.price.to_f
-    end
-    
+    total = product_list.inject(0) {|sum, product| sum + product.price.to_f}
     (total / product_list.count).round(2)
   end
   

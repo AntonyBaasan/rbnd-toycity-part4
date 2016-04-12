@@ -18,25 +18,8 @@ class Module
   end
   
   def find_by_field field = {}
-    res = where field 
-    # Better way?
-    return (res.length == 1) ? res.first : res
-    
-    res = where field 
+    res = self.where field 
+    (res.length == 1) ? res.first : res
   end
-
-  def where field = {}
-    table = CSV.table(@@data_path)
-    
-    found_rows = table.select do |row|
-        row.to_hash[field.keys[0]].to_s == field[field.keys[0]].to_s
-    end
-    
-    res = found_rows.map do |row|
-        self.new(row.to_hash)
-    end
-    
-    # Better way?
-    return res
-  end
+  
 end
