@@ -98,6 +98,17 @@ class Udacidata
     self.update_db self
   end
   
+  def self.where fields = {}
+    all_objects = self.all
+    found = []
+  
+    fields.each do |key, value|
+        found = all_objects.select {|object| object.send(key) == value}
+    end
+    
+    found
+  end
+  
   # get attribute array from instance
   def attrs
     instance_variables.map{|ivar| instance_variable_get ivar}
