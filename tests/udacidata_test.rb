@@ -136,6 +136,13 @@ class TestUdacidata < MiniTest::Test
     assert_kind_of(Array, array_of_products)
   end
   
+  def test_where_method_find_by_name
+    Product.create(brand: "Lego", name: "44444", price: 34.00)
+    array_of_products = Product.where(name: "44444")
+    # assert_equal(1, array_of_products.count)
+    assert_kind_of(Array, array_of_products)
+  end
+  
   def test_where_method_returns_correct_products
     Product.create(brand: "Lego", name: "Sticky Notes", price: 34.00)
     array_of_products = Product.where(brand: "Lego")

@@ -19,7 +19,6 @@ class Module
   
   def find_by_field field = {}
     res = where field 
-    # puts "--- "+res.length.to_s
     # Better way?
     return (res.length == 1) ? res.first : res
     
@@ -29,25 +28,14 @@ class Module
   def where field = {}
     table = CSV.table(@@data_path)
     
-    # puts "field: "+field.to_s
-    # puts "field.keys[0]: "+field.keys[0].to_s
-    # puts "field[field.keys[0]]: "+ field[field.keys[0]].to_s
-    
     found_rows = table.select do |row|
-        # puts "row[field.keys[0]].to_s: "+row.to_hash.to_s
-        # puts "row[field.keys[0]].to_s: "+row[field.keys[0]].to_s
-        # puts "field[field.keys[0]]: "+ field[field.keys[0]].to_s
         row.to_hash[field.keys[0]].to_s == field[field.keys[0]].to_s
     end
     
-    # puts "found_rows.to_s: "+ found_rows.to_s
-    
     res = found_rows.map do |row|
-        # puts "--- "+row.to_hash.to_s
         self.new(row.to_hash)
     end
     
-    # puts "--- "+res.length.to_s
     # Better way?
     return res
   end

@@ -47,7 +47,7 @@ class Udacidata
   end
   
   def self.find id
-    # Option A - Not much effeciant because it creates all the objects before find by id
+    # Option A - Not much effeciant because it creates all the objects before find by id. Am I right or it is OK?
     # all.each do |object|
     #     if(object.id == id)
     #         return object
@@ -81,9 +81,6 @@ class Udacidata
     File.open(@@data_path, 'w') do |f|
         f.write(table.to_csv)
     end
-    
-    # puts "deleted_row: " + deleted_row.to_s
-    # puts "deleted_row.to_hash: " + deleted_row.first.to_hash.to_s
     
     deleted_object = self.new(deleted_row.first.to_hash)
     return deleted_object
@@ -138,12 +135,10 @@ class Udacidata
             
         end
     end
-
     
     File.open(@@data_path, 'w') do |f|
         f.write(table.to_csv)
     end
-
 
     data
   end
