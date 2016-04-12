@@ -19,32 +19,25 @@ class Udacidata
     CSV.read(@@data_path).drop(1).map{|row| self.new(Hash[header.map(&:to_sym).zip row])}
   end
 
-  # QUESTION: What is better(or best) way?   
-  def self.first amount=1
-    # get header row as array of fields
-    header = CSV.read(@@data_path)[0]
-    rows = CSV.read(@@data_path).drop(1)
-    
-    # create data with params of zipped header and a row
-    res = rows.first(amount).map do |row|
-        self.new(Hash[header.map(&:to_sym).zip row])
-    end
-        
-    (amount == 1 ) ? res.first : res
-  end
+#   First and Last method
+  @@method_names = ["first", "last"]
+   # better solution?
+  @@method_names.each { |method_name|
+        class_eval %Q"
+            def self.#{method_name} amount=1
+                # get header row as array of fields
+                header = CSV.read(@@data_path)[0]
+                rows = CSV.read(@@data_path).drop(1)
+                
+                res = rows.#{method_name}(amount).map do |row|
+                    self.new(Hash[header.map(&:to_sym).zip row])
+                end
+                    
+                (amount == 1 ) ? res.first : res
+            end
+          "
+      }
   
-  # QUESTION: What is better(or best) way?   
-  def self.last amount=1
-    # get header row as array of fields
-    header = CSV.read(@@data_path)[0]
-    rows = CSV.read(@@data_path).drop(1)
-    
-    res = rows.last(amount).map do |row|
-        self.new(Hash[header.map(&:to_sym).zip row])
-    end
-        
-    (amount == 1 ) ? res.first : res
-  end
   
   def self.find id
     # Option A - Not much effeciant because it creates all the objects before find by id. Am I right or it is OK?
